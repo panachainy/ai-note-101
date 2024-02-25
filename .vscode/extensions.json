@@ -1,7 +1,9 @@
 {
     "recommendations": [
+        "njpwerner.autodocstring",
+        "ms-python.autopep8",
+        "KevinRose.vsc-python-indent",
         "ms-python.python",
-        "kevinrose.vsc-python-indent",
-        "njpwerner.autodocstring"
+        "ms-python.debugpy",
     ]
 }
