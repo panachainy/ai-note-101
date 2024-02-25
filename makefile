@@ -1,12 +1,14 @@
 setup:
 	# python -m venv .venv
 	pip install uvicorn
+	# pip install pipreqs
+	# pip install pipreqsnb
 	# source .venv/bin/activate
 
 gen_dependency:
-	pip install pipreqs
-	pipreqs .
-
+	# pipreqs .
+	# pipreqsnb .
+	
 i: install
 install:
 	python -m pip install -r requirements.txt
@@ -20,5 +22,5 @@ clean:
 	pip freeze | while read p; do pip uninstall -y "$p"; done
 
 dev:
-	uvicorn main:queue_prompt
+	uvicorn main:app --host 0.0.0.0 --port 5000
 	# uvicorn main:app --reload --port 5000
