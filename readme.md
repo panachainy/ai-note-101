@@ -31,3 +31,6 @@ Workflow shared by the community
 
 - [Disney Pixar Cartoon type B](https://civitai.com/models/75650/disney-pixar-cartoon-type-b)
 ![alt text](docs/images/image-4.png)
+
+- [majicMIX realistic](https://civitai.com/models/43331?modelVersionId=176425)
+![alt text](docs/images/image-5.png)
