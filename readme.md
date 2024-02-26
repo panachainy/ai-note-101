@@ -7,6 +7,19 @@ Workflow shared by the community
 - [openart](https://openart.ai/workflows/home?workflowSort=featured)
 - [comfyworkflows](https://comfyworkflows.com/)
 
+### Video animate
+
+[REF](https://www.youtube.com/watch?v=HbfDjAMFi6w)
+
+- https://github.com/ltdrdata/ComfyUI-Impact-Pack
+- https://github.com/Fannovel16/comfyui_controlnet_aux
+- https://github.com/Kosinkadink/ComfyUI-Advanced-ControlNet
+- https://github.com/ltdrdata/ComfyUI-Inspire-Pack
+- https://github.com/Kosinkadink/ComfyUI-AnimateDiff-Evolved
+- https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite
+- https://github.com/mcmonkeyprojects/sd-dynamic-thresholding
+
+
 ## Comfyui API
 
 - https://www.youtube.com/watch?v=va8Jkc7o9d4
