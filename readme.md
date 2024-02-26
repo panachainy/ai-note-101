@@ -28,3 +28,6 @@ Workflow shared by the community
 
 - [Disney Pixar Cartoon Type A](https://civitai.com/models/65203/disney-pixar-cartoon-type-a)
 ![alt text](docs/images/image-3.png)
+
+- [Disney Pixar Cartoon type B](https://civitai.com/models/75650/disney-pixar-cartoon-type-b)
+![alt text](docs/images/image-4.png)
