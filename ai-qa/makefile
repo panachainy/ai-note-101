@@ -1,6 +1,7 @@
 setup:
-	# python -m venv .venv
+	python -m venv .venv
 	pip install uvicorn
+	mkdir models
 	# pip install pipreqs
 	# pip install pipreqsnb
 	# source .venv/bin/activate
