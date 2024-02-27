@@ -1,11 +1,17 @@
-from langchain_community.llms import GPT4All
-from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_community.document_loaders import WebBaseLoader
 
-# There are many CallbackHandlers supported, such as
-# from langchain.callbacks.streamlit import StreamlitCallbackHandler
+loader = WebBaseLoader("https://lilianweng.github.io/posts/2023-06-23-agent/")
+data = loader.load()
 
-callbacks = [StreamingStdOutCallbackHandler()]
-model = GPT4All(model="./models/mistral-7b-openorca.Q4_0.gguf", n_threads=8)
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=0)
+all_splits = text_splitter.split_documents(data)
 
-# Generate text. Tokens are streamed through the callback manager.
-model("Once upon a time, ", callbacks=callbacks)
+from langchain_community.embeddings import GPT4AllEmbeddings
+from langchain_community.vectorstores import Chroma
+
+vectorstore = Chroma.from_documents(documents=all_splits, embedding=GPT4AllEmbeddings())
+
+question = "What are the approaches to Task Decomposition?"
+docs = vectorstore.similarity_search(question)
+len(docs)
