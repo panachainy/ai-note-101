@@ -22,4 +22,5 @@ llm = GPT4All(model="./models/mistral-7b-openorca.Q4_0.gguf", n_threads=8)
 
 chain = load_qa_chain(llm=llm, chain_type="map_reduce")
 query = "what is the total number of AI publications?"
-# chain.run(input_documents=documents, question=query)
+res = chain.run(input_documents=documents, question=query)
+print(res)
