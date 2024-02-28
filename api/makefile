@@ -1,13 +1,6 @@
 setup:
 	python -m venv .venv
 	pip install uvicorn
-	# pip install pipreqs
-	# pip install pipreqsnb
-	# source .venv/bin/activate
-
-gen_dependency:
-	# pipreqs .
-	# pipreqsnb .
 
 i: install
 install:
