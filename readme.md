@@ -47,3 +47,8 @@ Workflow shared by the community
 
 - [majicMIX realistic](https://civitai.com/models/43331?modelVersionId=176425)
 ![alt text](docs/images/image-5.png)
+
+## chat
+
+- https://huggingface.co/meta-llama/Llama-2-7b-chat-hf/tree/main
+- https://github.com/dataprofessor/llama2

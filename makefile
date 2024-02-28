@@ -1,6 +1,7 @@
 setup:
 	python -m venv .venv
 	pip install uvicorn
+	brew install jupyterlab
 	source .venv/bin/activate
 
 gen_dependency:
@@ -22,3 +23,6 @@ clean:
 dev:
 	uvicorn main:app --reload --host 0.0.0.0 --port 5000
 	# uvicorn main:app --reload --port 5000
+
+doc:
+	jupyter lab
