@@ -21,3 +21,9 @@ clean:
 
 dev:
 	streamlit run main.py
+
+serve:
+	ollama serve
+
+model:
+	ollama run llama2
