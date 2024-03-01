@@ -1,0 +1,95 @@
+version: '3.1'
+
+services:
+  flowise:
+    image: flowiseai/flowise
+    restart: always
+    environment:
+      - PORT=${PORT}
+      - CORS_ORIGINS=${CORS_ORIGINS}
+      - IFRAME_ORIGINS=${IFRAME_ORIGINS}
+      - FLOWISE_USERNAME=${FLOWISE_USERNAME}
+      - FLOWISE_PASSWORD=${FLOWISE_PASSWORD}
+      - FLOWISE_FILE_SIZE_LIMIT=${FLOWISE_FILE_SIZE_LIMIT}
+      - DEBUG=${DEBUG}
+      - DATABASE_PATH=${DATABASE_PATH}
+      - DATABASE_TYPE=${DATABASE_TYPE}
+      - DATABASE_PORT=${DATABASE_PORT}
+      - DATABASE_HOST=${DATABASE_HOST}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_SSL=${DATABASE_SSL}
+      - DATABASE_SSL_KEY_BASE64=${DATABASE_SSL_KEY_BASE64}
+      - APIKEY_PATH=${APIKEY_PATH}
+      - SECRETKEY_PATH=${SECRETKEY_PATH}
+      - FLOWISE_SECRETKEY_OVERWRITE=${FLOWISE_SECRETKEY_OVERWRITE}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - LOG_PATH=${LOG_PATH}
+      - BLOB_STORAGE_PATH=${BLOB_STORAGE_PATH}
+      - DISABLE_FLOWISE_TELEMETRY=${DISABLE_FLOWISE_TELEMETRY}
+    ports:
+      - '${PORT}:${PORT}'
+    volumes:
+      - ~/.flowise:/root/.flowise
+    command: /bin/sh -c "sleep 3; flowise start"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  # docker exec -it ollama ollama pull llama2
+  # docker exec -it ollama ollama pull nomic-embed-text
+  ollama:
+    volumes:
+      - ./ollama/ollama:/root/.ollama
+    container_name: ollama
+    pull_policy: always
+    tty: true
+    restart: unless-stopped
+    image: ollama/ollama:latest
+    ports:
+      - 11434:11434
+    # command: ollama run llama2
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    environment:
+      - OLLAMA_DEBUG="1"
+      - gpus=all
+
+  # localai:
+  #   tty: true
+  #   stdin_open: true
+  #   ports:
+  #     - 8080:8080
+  #   image: localai/localai:v2.9.0-ffmpeg-core
+  #   command: phi-2
+
+# ====================
+
+# docker run -ti -p 8080:8080 localai/localai:v2.9.0-ffmpeg-core phi-2
+# docker run -d --gpus=all -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
+# docker exec -it ollama ollama run llama2
+
+# version: '3.8'
+
+# services:
+
+
+#   ollama-webui:
+#     image: ghcr.io/ollama-webui/ollama-webui:main
+#     container_name: ollama-webui
+#     volumes:
+#       - ./ollama/ollama-webui:/app/backend/data
+#     depends_on:
+#       - ollama
+#     ports:
+#       - 3000:8080
+#     environment:
+#       - '/ollama/api=http://ollama:11434/api'
+#     extra_hosts:
+#       - host.docker.internal:host-gateway
+#     restart: unless-stopped
