@@ -1,0 +1,6 @@
+### embeddings
+
+curl http://localhost:11434/api/embeddings -d '{
+  "model": "nomic-embed-text",
+  "prompt": "Here is an article about llamas..."
+}'
