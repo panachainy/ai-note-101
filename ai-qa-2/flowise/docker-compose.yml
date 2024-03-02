@@ -1,5 +1,9 @@
 version: '3.1'
 
+networks:
+  net:
+    driver: bridge
+
 services:
   flowise:
     image: flowiseai/flowise
@@ -67,6 +71,33 @@ services:
   #     - 8080:8080
   #   image: localai/localai:v2.9.0-ffmpeg-core
   #   command: phi-2
+
+# ====================
+
+#   langflow:
+#     build:
+#       context: .
+#       dockerfile: langflow-Dockerfile
+#     ports:
+#       - "7860:7860"
+#     command: langflow run --host 0.0.0.0
+
+  chroma:
+    image: ghcr.io/chroma-core/chroma:latest
+    environment:
+      - IS_PERSISTENT=TRUE
+    volumes:
+      # Default configuration for persist_directory in chromadb/config.py
+      # Currently it's located in "/chroma/chroma/"
+      - chroma-data:/chroma/chroma/
+    ports:
+      - 8000:8000
+    networks:
+      - net
+
+volumes:
+  chroma-data:
+    driver: local
 
 # ====================
 
