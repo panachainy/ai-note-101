@@ -1,19 +1,22 @@
-act:
+env.act:
 	source .venv/bin/activate
 
-setup:
+f: freeze
+freeze: env.export
+env.export:
+	python -m pip freeze > requirements.txt
+
+re: env.recreate
+env.recreate:
 	python -m venv .venv
-	pip install uvicorn
-	mkdir models
-	source .venv
+
+setup:
+	make env.recreate
+	make env.act
 
 i: install
 install:
 	python -m pip install -r requirements.txt
-
-f: freeze
-freeze:
-	python -m pip freeze > requirements.txt
 
 c: clean
 clean:
@@ -21,19 +24,3 @@ clean:
 
 dev:
 	streamlit run main.py
-
-serve:
-	ollama serve
-
-model:
-	ollama run llama2
-
-# test@gmail.com
-docker.ui:
-	docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main
-
-docker.serve:
-	docker run -d --gpus=all -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
-
-docker.model:
-	docker exec -it ollama ollama run llama2
