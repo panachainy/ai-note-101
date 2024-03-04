@@ -1,3 +1,4 @@
+act: env.act
 env.act:
 	source .venv/bin/activate
 
@@ -24,3 +25,9 @@ clean:
 
 dev:
 	streamlit run main.py
+
+doc:
+	jupyter lab
+
+doc.up:
+	jupyter nbconvert --execute --to markdown readme.ipynb
