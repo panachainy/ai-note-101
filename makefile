@@ -26,3 +26,6 @@ dev:
 
 doc:
 	jupyter lab
+
+doc.up:
+	jupyter nbconvert --execute --to markdown readme.ipynb
