@@ -1,0 +1,12 @@
+{
+  "name": "lang-chain-qa",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "nodemon": "^3.1.0"
+  },
+  "scripts": {
+    "dev": "nodemon --exec python main.py"
+  }
+}
