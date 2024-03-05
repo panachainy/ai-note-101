@@ -34,8 +34,33 @@ prompt = PromptTemplate.from_template(template)
 chain = prompt | llm
 
 question = "How much is 2+2?"
-print(chain.invoke({"question": question}))
+# print(chain.invoke({"question": question}))
 
+
+from langchain.document_loaders import PyPDFLoader
+loader = PyPDFLoader("resources/Legal-AI-a-beginners-guide-web.pdf")
+
+
+# loaders = [
+#     # Duplicate documents on purpose - messy data
+#     PyPDFLoader("resources/Legal-AI-a-beginners-guide-web.pdf"),
+#     # PyPDFLoader("docs/cs229_lectures/MachineLearning-Lecture01.pdf"),
+#     # PyPDFLoader("docs/cs229_lectures/MachineLearning-Lecture02.pdf"),
+#     # PyPDFLoader("docs/cs229_lectures/MachineLearning-Lecture03.pdf")
+# ]
+# docs = []
+# for loader in loaders:
+#     docs.extend(loader.load())
+
+
+#Load the document by calling loader.load()
+pages = loader.load()
+
+print(len(pages))
+print(pages[0].page_content[0:500])
+
+print(pages[0].metadata)
+# {'source': 'docs/cs229_lectures/MachineLearning-Lecture01.pdf', 'page': 0}
 
 # print(
 #     llm.invoke(
