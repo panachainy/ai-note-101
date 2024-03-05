@@ -1,6 +1,6 @@
 import os
 import sys
-from langchain_google_genai import GoogleGenerativeAI
+from langchain_google_genai import GoogleGenerativeAI, HarmBlockThreshold, HarmCategory
 from langchain.prompts import PromptTemplate
 
 from dotenv import load_dotenv
@@ -12,8 +12,19 @@ config = {
 
 api_key = config["GOOGLE_API_KEY"]
 
-llm = GoogleGenerativeAI(model="models/text-bison-001", google_api_key=api_key)
+# llm = GoogleGenerativeAI(model="models/text-bison-001", google_api_key=api_key,
+#                          safety_settings={
+#                              HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
+#                          },
+#                          )
 
+llm = GoogleGenerativeAI(
+    model="gemini-pro",
+    google_api_key=api_key,
+    safety_settings={
+        HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
+    },
+)
 
 template = """Question: {question}
 
