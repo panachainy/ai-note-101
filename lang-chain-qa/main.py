@@ -83,11 +83,6 @@ def multiple_pdf_load(paths: list[str]):
     return docs
 
 
-docs = multiple_pdf_load(
-    ['resources/ex-eng.pdf', 'resources/ex-thai.pdf']
-)
-
-
 def load_docs_to_splitter(docs: list) -> List[Document]:
     # Define the Text Splitter
     from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -101,27 +96,44 @@ def load_docs_to_splitter(docs: list) -> List[Document]:
     return splits
 
 
-splits = load_docs_to_splitter(docs)
+def get_vectordb() -> any:
+    embedding = GoogleGenerativeAIEmbeddings(
+        model="models/embedding-001",
+        google_api_key=api_key,
+        # task_type="retrieval_query",
+        # task_type="retrieval_document"
+    )
 
-# embedding = OpenAIEmbeddings()
+    persist_directory = 'docs/chroma/'
 
-embedding = GoogleGenerativeAIEmbeddings(
-    model="models/embedding-001",
-    google_api_key=api_key,
-    # task_type="retrieval_query",
-    # task_type="retrieval_document"
-)
+    # check if have chroma in local need to skip `Chroma.from_documents` use `Chroma` instead
+    if os.path.exists(persist_directory+'chroma.sqlite3'):
+        return Chroma(
+            persist_directory=persist_directory
+        )
+    else:
+        docs = multiple_pdf_load(
+            ['resources/ex-eng.pdf', 'resources/ex-thai.pdf']
+        )
+        splits = load_docs_to_splitter(docs)
+        return Chroma.from_documents(
+            documents=splits,
+            embedding=embedding,
+            persist_directory=persist_directory
+        )
 
-# s = embedding.embed_query('hi')
-# print(s:5)
 
-# persist_directory = 'docs/chroma/'
-
-# # Create the vector store
+# Create the vector store (only first time)
 # vectordb = Chroma.from_documents(
 #     documents=splits,
 #     embedding=embedding,
 #     persist_directory=persist_directory
 # )
+# vectordb = Chroma(
+#     persist_directory=persist_directory,
+#     embedding_function=embedding
+# )
 
-# print(vectordb._collection.count())
+vectordb = get_vectordb()
+
+print(vectordb._collection.count())
