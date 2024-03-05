@@ -1,6 +1,8 @@
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain_community.vectorstores import Chroma
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
+import getpass
 import os
+from langchain_community.vectorstores import Chroma
+from langchain.embeddings.openai import OpenAIEmbeddings
 import sys
 from langchain_google_genai import GoogleGenerativeAI, HarmBlockThreshold, HarmCategory
 from langchain.prompts import PromptTemplate
@@ -11,6 +13,9 @@ from typing import (
 
 from dotenv import load_dotenv
 load_dotenv()
+
+if "GOOGLE_API_KEY" not in os.environ:
+    os.environ["GOOGLE_API_KEY"] = getpass("Provide your Google API key here")
 
 config = {
     **os.environ,  # override loaded values with environment variables
@@ -96,6 +101,27 @@ def load_docs_to_splitter(docs: list) -> List[Document]:
     return splits
 
 
-load_docs_to_splitter(docs)
+splits = load_docs_to_splitter(docs)
 
 # embedding = OpenAIEmbeddings()
+
+embedding = GoogleGenerativeAIEmbeddings(
+    model="models/embedding-001",
+    google_api_key=api_key,
+    # task_type="retrieval_query",
+    # task_type="retrieval_document"
+)
+
+# s = embedding.embed_query('hi')
+# print(s:5)
+
+# persist_directory = 'docs/chroma/'
+
+# # Create the vector store
+# vectordb = Chroma.from_documents(
+#     documents=splits,
+#     embedding=embedding,
+#     persist_directory=persist_directory
+# )
+
+# print(vectordb._collection.count())
