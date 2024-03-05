@@ -1,3 +1,5 @@
+from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain.vectorstores import Chroma
 import os
 import sys
 from langchain_google_genai import GoogleGenerativeAI, HarmBlockThreshold, HarmCategory
@@ -57,27 +59,38 @@ load_pdf_single_file('resources/Legal-AI-a-beginners-guide-web.pdf')
 print('=====================================================================')
 
 
-def multiple_pdf_load(paths):
+def multiple_pdf_load(paths: list[str]):
     from langchain.document_loaders import PyPDFLoader
 
-    # Load PDF
+    # Load PDFs
     loaders = []
     for path in paths:
+        print(path)
         loaders.append(PyPDFLoader(path))
 
-        # Duplicate documents on purpose - messy data
-    #     PyPDFLoader("docs/cs229_lectures/MachineLearning-Lecture01.pdf"),
-    #     PyPDFLoader("docs/cs229_lectures/MachineLearning-Lecture01.pdf"),
-    #     PyPDFLoader("docs/cs229_lectures/MachineLearning-Lecture02.pdf"),
-    #     PyPDFLoader("docs/cs229_lectures/MachineLearning-Lecture03.pdf")
-    # ]
     docs = []
     for loader in loaders:
         docs.extend(loader.load())
 
+    return docs
     # print(docs)
 
 
-multiple_pdf_load(
-    ['ex-eng.pdf', 'ex-thai.pdf']
+docs = multiple_pdf_load(
+    ['resources/ex-eng.pdf', 'resources/ex-thai.pdf']
 )
+
+
+def load_docs_to_splitter(docs: list):
+    # Define the Text Splitter
+    from langchain.text_splitter import RecursiveCharacterTextSplitter
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=1500,
+        chunk_overlap=150
+    )
+
+    # Create a split of the document using the text splitter
+    splits = text_splitter.split_documents(docs)
+
+
+embedding = OpenAIEmbeddings()
