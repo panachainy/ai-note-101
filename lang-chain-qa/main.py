@@ -1,11 +1,38 @@
-import streamlit as st
+import os
+import sys
+from langchain_google_genai import GoogleGenerativeAI
+from langchain.prompts import PromptTemplate
+
 from dotenv import load_dotenv
 load_dotenv()
 
-st.title('🎈 Demo')
+config = {
+    **os.environ,  # override loaded values with environment variables
+}
 
-st.write('Hello world!')
-st.write('Hello world!')
+api_key = config["GOOGLE_API_KEY"]
 
-x = st.slider("Select a value")
-st.write(x, "squared is", x * x)
+llm = GoogleGenerativeAI(model="models/text-bison-001", google_api_key=api_key)
+
+
+template = """Question: {question}
+
+Answer: Let's think step by step."""
+prompt = PromptTemplate.from_template(template)
+
+chain = prompt | llm
+
+question = "How much is 2+2?"
+print(chain.invoke({"question": question}))
+
+
+# print(
+#     llm.invoke(
+#         "Hi"
+#     )
+# )
+
+
+# for chunk in chain.stream({"question": question}):
+#     sys.stdout.write(chunk)
+#     sys.stdout.flush()
