@@ -26,20 +26,30 @@ llm = GoogleGenerativeAI(
     },
 )
 
-template = """Question: {question}
+def ex_chat():
+    template = """Question: {question}
 
-Answer: Let's think step by step."""
-prompt = PromptTemplate.from_template(template)
+    Answer: Let's think step by step."""
+    prompt = PromptTemplate.from_template(template)
 
-chain = prompt | llm
+    chain = prompt | llm
 
-question = "How much is 2+2?"
-# print(chain.invoke({"question": question}))
+    question = "How much is 2+2?"
+    print(chain.invoke({"question": question}))
 
 
-from langchain.document_loaders import PyPDFLoader
-loader = PyPDFLoader("resources/Legal-AI-a-beginners-guide-web.pdf")
+def load_pdf_single_file(path):
+    from langchain.document_loaders import PyPDFLoader
+    loader = PyPDFLoader(path)
+    pages = loader.load()
 
+    print(len(pages))
+    print(pages[0].page_content[0:500])
+
+    print(pages[0].metadata)
+    return pages
+
+load_pdf_single_file('resources/Legal-AI-a-beginners-guide-web.pdf')
 
 # loaders = [
 #     # Duplicate documents on purpose - messy data
@@ -54,12 +64,7 @@ loader = PyPDFLoader("resources/Legal-AI-a-beginners-guide-web.pdf")
 
 
 #Load the document by calling loader.load()
-pages = loader.load()
 
-print(len(pages))
-print(pages[0].page_content[0:500])
-
-print(pages[0].metadata)
 # {'source': 'docs/cs229_lectures/MachineLearning-Lecture01.pdf', 'page': 0}
 
 # print(
