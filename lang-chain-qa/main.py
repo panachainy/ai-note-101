@@ -54,7 +54,7 @@ def load_pdf_single_file(path: str):
     return pages
 
 
-load_pdf_single_file('resources/Legal-AI-a-beginners-guide-web.pdf')
+# load_pdf_single_file('resources/ex-eng.pdf')
 
 print('=====================================================================')
 
@@ -65,7 +65,6 @@ def multiple_pdf_load(paths: list[str]):
     # Load PDFs
     loaders = []
     for path in paths:
-        print(path)
         loaders.append(PyPDFLoader(path))
 
     docs = []
@@ -73,7 +72,6 @@ def multiple_pdf_load(paths: list[str]):
         docs.extend(loader.load())
 
     return docs
-    # print(docs)
 
 
 docs = multiple_pdf_load(
@@ -92,5 +90,6 @@ def load_docs_to_splitter(docs: list):
     # Create a split of the document using the text splitter
     splits = text_splitter.split_documents(docs)
 
+# load_docs_to_splitter(docs)
 
-embedding = OpenAIEmbeddings()
+# embedding = OpenAIEmbeddings()
