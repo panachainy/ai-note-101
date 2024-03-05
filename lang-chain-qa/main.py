@@ -1,9 +1,13 @@
 from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.vectorstores import Chroma
+from langchain_community.vectorstores import Chroma
 import os
 import sys
 from langchain_google_genai import GoogleGenerativeAI, HarmBlockThreshold, HarmCategory
 from langchain.prompts import PromptTemplate
+from langchain_core.documents import Document
+from typing import (
+    List,
+)
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -79,7 +83,7 @@ docs = multiple_pdf_load(
 )
 
 
-def load_docs_to_splitter(docs: list):
+def load_docs_to_splitter(docs: list) -> List[Document]:
     # Define the Text Splitter
     from langchain.text_splitter import RecursiveCharacterTextSplitter
     text_splitter = RecursiveCharacterTextSplitter(
@@ -89,7 +93,9 @@ def load_docs_to_splitter(docs: list):
 
     # Create a split of the document using the text splitter
     splits = text_splitter.split_documents(docs)
+    return splits
 
-# load_docs_to_splitter(docs)
+
+load_docs_to_splitter(docs)
 
 # embedding = OpenAIEmbeddings()
