@@ -1,7 +1,10 @@
+act:
+	source .venv/bin/activate
+
 setup:
 	python -m venv .venv
-	pip install uvicorn
-	brew install jupyterlab
+	# pip install uvicorn
+	# brew install jupyterlab
 	source .venv/bin/activate
 
 gen_dependency:

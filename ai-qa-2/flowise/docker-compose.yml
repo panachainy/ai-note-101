@@ -74,13 +74,13 @@ services:
 
 # ====================
 
-#   langflow:
-#     build:
-#       context: .
-#       dockerfile: langflow-Dockerfile
-#     ports:
-#       - "7860:7860"
-#     command: langflow run --host 0.0.0.0
+  langflow:
+    build:
+      context: .
+      dockerfile: langflow-Dockerfile
+    ports:
+      - "7860:7860"
+    command: langflow run --host 0.0.0.0
 
   chroma:
     image: ghcr.io/chroma-core/chroma:latest
