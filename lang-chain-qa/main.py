@@ -26,7 +26,8 @@ llm = GoogleGenerativeAI(
     },
 )
 
-def ex_chat():
+
+def ex_chat(question: str):
     template = """Question: {question}
 
     Answer: Let's think step by step."""
@@ -34,11 +35,12 @@ def ex_chat():
 
     chain = prompt | llm
 
-    question = "How much is 2+2?"
     print(chain.invoke({"question": question}))
 
+# ex_chat("How much is 2+2?")
 
-def load_pdf_single_file(path):
+
+def load_pdf_single_file(path: str):
     from langchain.document_loaders import PyPDFLoader
     loader = PyPDFLoader(path)
     pages = loader.load()
@@ -49,31 +51,33 @@ def load_pdf_single_file(path):
     print(pages[0].metadata)
     return pages
 
+
 load_pdf_single_file('resources/Legal-AI-a-beginners-guide-web.pdf')
 
-# loaders = [
-#     # Duplicate documents on purpose - messy data
-#     PyPDFLoader("resources/Legal-AI-a-beginners-guide-web.pdf"),
-#     # PyPDFLoader("docs/cs229_lectures/MachineLearning-Lecture01.pdf"),
-#     # PyPDFLoader("docs/cs229_lectures/MachineLearning-Lecture02.pdf"),
-#     # PyPDFLoader("docs/cs229_lectures/MachineLearning-Lecture03.pdf")
-# ]
-# docs = []
-# for loader in loaders:
-#     docs.extend(loader.load())
+print('=====================================================================')
 
 
-#Load the document by calling loader.load()
+def multiple_pdf_load(paths):
+    from langchain.document_loaders import PyPDFLoader
 
-# {'source': 'docs/cs229_lectures/MachineLearning-Lecture01.pdf', 'page': 0}
+    # Load PDF
+    loaders = []
+    for path in paths:
+        loaders.append(PyPDFLoader(path))
 
-# print(
-#     llm.invoke(
-#         "Hi"
-#     )
-# )
+        # Duplicate documents on purpose - messy data
+    #     PyPDFLoader("docs/cs229_lectures/MachineLearning-Lecture01.pdf"),
+    #     PyPDFLoader("docs/cs229_lectures/MachineLearning-Lecture01.pdf"),
+    #     PyPDFLoader("docs/cs229_lectures/MachineLearning-Lecture02.pdf"),
+    #     PyPDFLoader("docs/cs229_lectures/MachineLearning-Lecture03.pdf")
+    # ]
+    docs = []
+    for loader in loaders:
+        docs.extend(loader.load())
+
+    # print(docs)
 
 
-# for chunk in chain.stream({"question": question}):
-#     sys.stdout.write(chunk)
-#     sys.stdout.flush()
+multiple_pdf_load(
+    ['ex-eng.pdf', 'ex-thai.pdf']
+)
