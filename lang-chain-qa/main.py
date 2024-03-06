@@ -36,9 +36,9 @@ llm = ChatGoogleGenerativeAI(model="gemini-pro",
                              top_p=0.85,
                              #  model="gemini-pro",
                              google_api_key=api_key,
-                             safety_settings={
-                                 HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
-                             },
+                            #  safety_settings={
+                            #      HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
+                            #  },
                              # FIXME: not sure
                              convert_system_message_to_human=True
                              )
@@ -119,13 +119,19 @@ def get_vectordb() -> any:
     )
     # check if have chroma in local need to skip `Chroma.from_documents` use `Chroma` instead
     if os.path.exists(persist_directory+'chroma.sqlite3'):
+        print('=== retrieve old Chroma ===')
         return Chroma(
             persist_directory=persist_directory,
             embedding_function=embedding,
         )
     else:
-        files_path = get_files_from_directory(resource_dir)
-        docs = multiple_pdf_load(files_path)
+        print('=== new Chroma ===')
+        # files_path = get_files_from_directory(resource_dir)
+        # docs = multiple_pdf_load(files_path)
+        docs = multiple_pdf_load(
+            ['resources/ai-explaining.pdf']
+            # ['resources/ai-explaining.pdf', 'resources/how-to-cook-omelette.pdf']
+        )
         splits = load_docs_to_splitter(docs)
         return Chroma.from_documents(
             documents=splits,
