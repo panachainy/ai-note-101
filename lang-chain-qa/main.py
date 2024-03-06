@@ -26,7 +26,7 @@ if "GOOGLE_API_KEY" not in os.environ:
 config = {
     **os.environ,  # override loaded values with environment variables
 }
-
+resource_dir = "./resources"
 api_key = config["GOOGLE_API_KEY"]
 
 # ChatGoogleGenerativeAI
@@ -41,6 +41,7 @@ llm = ChatGoogleGenerativeAI(model="gemini-pro",
                              # FIXME: not sure
                              convert_system_message_to_human=True
                              )
+
 
 def ex_chat(question: str):
     template = """Question: {question}
@@ -100,6 +101,15 @@ def load_docs_to_splitter(docs: list) -> List[Document]:
     return splits
 
 
+def get_files_from_directory(directory: str) -> List[str]:
+    files = []
+    for file in os.listdir(directory):
+        if file.endswith(".pdf"):
+            file_path = "/".join([directory, file])
+            files.append(file_path)
+    return files
+
+
 def get_vectordb() -> any:
     persist_directory = 'docs/chroma/'
     embedding = GoogleGenerativeAIEmbeddings(
@@ -113,32 +123,29 @@ def get_vectordb() -> any:
             embedding_function=embedding,
         )
     else:
-        docs = multiple_pdf_load(
-            ['resources/ex-eng.pdf', 'resources/ex-thai.pdf']
-        )
+        files_path = get_files_from_directory(resource_dir)
+        docs = multiple_pdf_load(files_path)
         splits = load_docs_to_splitter(docs)
         return Chroma.from_documents(
             documents=splits,
-            embedding=embedding,
-            # embedding_function=embedding_function,
+            embedding_function=embedding,
             persist_directory=persist_directory
         )
 
-
 vectordb = get_vectordb()
-
-retriever = vectordb.as_retriever()
 
 print(vectordb._collection.count())
 print(vectordb._collection)
 
-retrieval_qa_chat_prompt = hub.pull("langchain-ai/retrieval-qa-chat")
+# retriever = vectordb.as_retriever()
 
-combine_docs_chain = create_stuff_documents_chain(
-    llm, retrieval_qa_chat_prompt
-)
+# retrieval_qa_chat_prompt = hub.pull("langchain-ai/retrieval-qa-chat")
 
-retrieval_chain = create_retrieval_chain(retriever, combine_docs_chain)
+# combine_docs_chain = create_stuff_documents_chain(
+#     llm, retrieval_qa_chat_prompt
+# )
 
-result =retrieval_chain.invoke({"input": "what about ai?"})
-print(result)
+# retrieval_chain = create_retrieval_chain(retriever, combine_docs_chain)
+
+# result =retrieval_chain.invoke({"input": "what about ai?"})
+# print(result)
