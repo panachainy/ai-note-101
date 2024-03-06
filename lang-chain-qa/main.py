@@ -6,13 +6,14 @@ from langchain_community.vectorstores import Chroma
 from langchain_google_genai import HarmBlockThreshold, HarmCategory
 from langchain.prompts import PromptTemplate
 from langchain_core.documents import Document
-from langchain.chains import RetrievalQA
+# from langchain.chains import RetrievalQA
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain import hub
+from langchain_community.document_loaders import PyPDFLoader
 
-import chromadb.utils.embedding_functions as embedding_functions
-from langchain.retrievers.self_query.base import SelfQueryRetriever
+# import chromadb.utils.embedding_functions as embedding_functions
+# from langchain.retrievers.self_query.base import SelfQueryRetriever
 from typing import (
     List,
 )
@@ -128,6 +129,7 @@ def get_vectordb() -> any:
         splits = load_docs_to_splitter(docs)
         return Chroma.from_documents(
             documents=splits,
+            embedding=embedding,
             embedding_function=embedding,
             persist_directory=persist_directory
         )
@@ -137,15 +139,16 @@ vectordb = get_vectordb()
 print(vectordb._collection.count())
 print(vectordb._collection)
 
-# retriever = vectordb.as_retriever()
+retriever = vectordb.as_retriever()
 
-# retrieval_qa_chat_prompt = hub.pull("langchain-ai/retrieval-qa-chat")
+retrieval_qa_chat_prompt = hub.pull("langchain-ai/retrieval-qa-chat")
 
-# combine_docs_chain = create_stuff_documents_chain(
-#     llm, retrieval_qa_chat_prompt
-# )
+combine_docs_chain = create_stuff_documents_chain(
+    llm, retrieval_qa_chat_prompt
+)
 
-# retrieval_chain = create_retrieval_chain(retriever, combine_docs_chain)
+retrieval_chain = create_retrieval_chain(retriever, combine_docs_chain)
 
-# result =retrieval_chain.invoke({"input": "what about ai?"})
-# print(result)
+input = "what about ai?"
+result = retrieval_chain.invoke({"input": input})
+print(result)
