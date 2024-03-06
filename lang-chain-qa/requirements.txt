@@ -50,7 +50,9 @@ langchain==0.1.9
 langchain-community==0.0.25
 langchain-core==0.1.29
 langchain-google-genai==0.0.9
+langchainhub==0.1.15
 langsmith==0.1.9
+lark==1.1.9
 markdown-it-py==3.0.0
 MarkupSafe==2.1.5
 marshmallow==3.21.0
@@ -119,6 +121,7 @@ tornado==6.4
 tqdm==4.66.2
 transformers==4.38.1
 typer==0.9.0
+types-requests==2.31.0.20240218
 typing-inspect==0.9.0
 typing_extensions==4.10.0
 tzdata==2024.1
