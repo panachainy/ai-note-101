@@ -123,11 +123,8 @@ def get_vectordb() -> any:
         )
     else:
         print('=== new Chroma ===')
-        # files_path = get_files_from_directory(resource_dir)
-        # docs = multiple_pdf_load(files_path)
-        docs = multiple_pdf_load(
-            ['resources/how-to-cook-omelette.pdf', 'resources/ai-explaining.pdf']
-        )
+        files_path = get_files_from_directory(resource_dir)
+        docs = multiple_pdf_load(files_path)
         splits = load_docs_to_splitter(docs)
         return Chroma.from_documents(
             documents=splits,
