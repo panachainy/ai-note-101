@@ -34,11 +34,10 @@ api_key = config["GOOGLE_API_KEY"]
 llm = ChatGoogleGenerativeAI(model="gemini-pro",
                              temperature=0,
                              top_p=0.85,
-                             #  model="gemini-pro",
                              google_api_key=api_key,
-                            #  safety_settings={
-                            #      HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
-                            #  },
+                             safety_settings={
+                                 HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
+                             },
                              # FIXME: not sure
                              convert_system_message_to_human=True
                              )
