@@ -10,7 +10,7 @@ from langchain_core.documents import Document
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain import hub
-from langchain_community.document_loaders import PyPDFLoader
+# from langchain_community.document_loaders import PyPDFLoader
 
 # import chromadb.utils.embedding_functions as embedding_functions
 # from langchain.retrievers.self_query.base import SelfQueryRetriever
@@ -130,7 +130,6 @@ def get_vectordb() -> any:
         return Chroma.from_documents(
             documents=splits,
             embedding=embedding,
-            embedding_function=embedding,
             persist_directory=persist_directory
         )
 
