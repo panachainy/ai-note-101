@@ -126,8 +126,7 @@ def get_vectordb() -> any:
         # files_path = get_files_from_directory(resource_dir)
         # docs = multiple_pdf_load(files_path)
         docs = multiple_pdf_load(
-            ['resources/ai-explaining.pdf']
-            # ['resources/ai-explaining.pdf', 'resources/how-to-cook-omelette.pdf']
+            ['resources/how-to-cook-omelette.pdf', 'resources/ai-explaining.pdf']
         )
         splits = load_docs_to_splitter(docs)
         return Chroma.from_documents(
@@ -135,6 +134,7 @@ def get_vectordb() -> any:
             embedding=embedding,
             persist_directory=persist_directory
         )
+
 
 vectordb = get_vectordb()
 
@@ -151,6 +151,6 @@ combine_docs_chain = create_stuff_documents_chain(
 
 retrieval_chain = create_retrieval_chain(retriever, combine_docs_chain)
 
-input = "what about ai?"
+input = "how to cook omelette?"
 result = retrieval_chain.invoke({"input": input})
 print(result)
