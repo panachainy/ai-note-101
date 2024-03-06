@@ -1,19 +1,18 @@
+from langchain.chains import create_retrieval_chain
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 import getpass
 import os
 from langchain_community.vectorstores import Chroma
-# from langchain.embeddings.openai import OpenAIEmbeddings
-# import sys
 from langchain_google_genai import HarmBlockThreshold, HarmCategory
 from langchain.prompts import PromptTemplate
 from langchain_core.documents import Document
 from langchain.chains import RetrievalQA
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain.chains.combine_documents import create_stuff_documents_chain
+from langchain import hub
 
-# import chromadb
-# from chromadb.utils import embedding_functions
 import chromadb.utils.embedding_functions as embedding_functions
-
+from langchain.retrievers.self_query.base import SelfQueryRetriever
 from typing import (
     List,
 )
@@ -30,13 +29,6 @@ config = {
 
 api_key = config["GOOGLE_API_KEY"]
 
-# llm = GoogleGenerativeAI(model="models/text-bison-001", google_api_key=api_key,
-#                          safety_settings={
-#                              HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
-#                          },
-#                          )
-
-
 # ChatGoogleGenerativeAI
 llm = ChatGoogleGenerativeAI(model="gemini-pro",
                              temperature=0,
@@ -49,14 +41,6 @@ llm = ChatGoogleGenerativeAI(model="gemini-pro",
                              # FIXME: not sure
                              convert_system_message_to_human=True
                              )
-# llm = GoogleGenerativeAI(
-#     model="gemini-pro",
-#     google_api_key=api_key,
-#     safety_settings={
-#         HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
-#     },
-# )
-
 
 def ex_chat(question: str):
     template = """Question: {question}
@@ -118,21 +102,15 @@ def load_docs_to_splitter(docs: list) -> List[Document]:
 
 def get_vectordb() -> any:
     persist_directory = 'docs/chroma/'
-    # embedding_function = embedding_functions.GoogleGenerativeAiEmbeddingFunction(
-    #     api_key=api_key
-    # )
     embedding = GoogleGenerativeAIEmbeddings(
         model="models/embedding-001",
         google_api_key=api_key,
-        # task_type="retrieval_query",
-        # task_type="retrieval_document"
     )
     # check if have chroma in local need to skip `Chroma.from_documents` use `Chroma` instead
     if os.path.exists(persist_directory+'chroma.sqlite3'):
         return Chroma(
             persist_directory=persist_directory,
             embedding_function=embedding,
-            # embedding_function=embedding_function
         )
     else:
         docs = multiple_pdf_load(
@@ -149,27 +127,18 @@ def get_vectordb() -> any:
 
 vectordb = get_vectordb()
 
+retriever = vectordb.as_retriever()
+
 print(vectordb._collection.count())
 print(vectordb._collection)
-# print(vectordb._collection.find_one())
-# question = "what did they say about matlab?"
-# docs_ss = vectordb.similarity_search(question, k=3)
-# docs_ss[0].page_content[:100]
-# docs_ss[1].page_content[:100]
 
-# docs_mmr = vectordb.max_marginal_relevance_search(question, k=3)
-# docs_mmr[0].page_content[:100]
-# docs_mmr[1].page_content[:100]
+retrieval_qa_chat_prompt = hub.pull("langchain-ai/retrieval-qa-chat")
 
-qa_chain = RetrievalQA.from_chain_type(
-    llm,
-    retriever=vectordb.as_retriever()
+combine_docs_chain = create_stuff_documents_chain(
+    llm, retrieval_qa_chat_prompt
 )
 
-# Pass question to the qa_chain
-question = "What is AI?"
-result = qa_chain({"query": question})
-result["result"]
+retrieval_chain = create_retrieval_chain(retriever, combine_docs_chain)
 
+result =retrieval_chain.invoke({"input": "what about ai?"})
 print(result)
-# vectordb
