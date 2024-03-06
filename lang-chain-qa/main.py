@@ -11,7 +11,8 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain import hub
 # from langchain_community.document_loaders import PyPDFLoader
-
+# from langchain.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyPDFLoader
 # import chromadb.utils.embedding_functions as embedding_functions
 # from langchain.retrievers.self_query.base import SelfQueryRetriever
 from typing import (
@@ -57,7 +58,6 @@ def ex_chat(question: str):
 
 
 def load_pdf_single_file(path: str):
-    from langchain.document_loaders import PyPDFLoader
     loader = PyPDFLoader(path)
     pages = loader.load()
 
@@ -74,8 +74,6 @@ print('=====================================================================')
 
 
 def multiple_pdf_load(paths: list[str]):
-    from langchain.document_loaders import PyPDFLoader
-
     # Load PDFs
     loaders = []
     for path in paths:
