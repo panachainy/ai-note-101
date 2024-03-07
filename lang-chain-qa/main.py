@@ -1,12 +1,10 @@
 from langchain.chains import create_retrieval_chain
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
 import getpass
 import os
+from langchain_google_genai import HarmBlockThreshold, HarmCategory, ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import Chroma
-from langchain_google_genai import HarmBlockThreshold, HarmCategory
 from langchain.prompts import PromptTemplate
 from langchain_core.documents import Document
-from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain import hub
 from langchain_community.document_loaders import PyPDFLoader
