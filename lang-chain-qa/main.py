@@ -108,6 +108,7 @@ def get_vectordb() -> any:
     embedding = GoogleGenerativeAIEmbeddings(
         model="models/embedding-001",
         google_api_key=api_key,
+        task_type="retrieval_query"
     )
     # check if have chroma in local need to skip `Chroma.from_documents` use `Chroma` instead
     if os.path.exists(persist_directory+'chroma.sqlite3'):
