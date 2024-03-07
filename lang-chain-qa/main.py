@@ -27,16 +27,17 @@ resource_dir = "./resources"
 api_key = config["GOOGLE_API_KEY"]
 
 # ChatGoogleGenerativeAI
-llm = ChatGoogleGenerativeAI(model="gemini-pro",
-                             temperature=0,
-                             top_p=0.85,
-                             google_api_key=api_key,
-                             safety_settings={
-                                 HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
-                             },
-                             # FIXME: not sure
-                             convert_system_message_to_human=True
-                             )
+llm = ChatGoogleGenerativeAI(
+    model="gemini-pro",
+    temperature=0,
+    top_p=0.85,
+    google_api_key=api_key,
+    safety_settings={
+        HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
+    },
+    # FIXME: not sure
+    convert_system_message_to_human=True
+)
 
 
 def ex_chat(question: str):
