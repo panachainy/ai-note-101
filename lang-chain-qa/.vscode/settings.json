@@ -3,6 +3,8 @@
         "dotenv",
         "genai",
         "langchain",
-        "uvicorn"
+        "uvicorn",
+        "Langflow",
+        "Flowise"
     ]
 }
