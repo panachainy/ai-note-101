@@ -1,0 +1,48 @@
+version: '3.9'
+
+networks:
+  net:
+    driver: bridge
+
+services:
+  ollama:
+    volumes:
+      - ollama:/root/.ollama
+    container_name: ollama
+    pull_policy: always
+    tty: true
+    restart: unless-stopped
+    image: ollama/ollama:latest
+    ports:
+      - 11434:11434
+    # command: ollama run llama2
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    environment:
+      - OLLAMA_DEBUG="1"
+      - gpus=all
+
+### should be use Faiss
+#   chroma:
+#     image: ghcr.io/chroma-core/chroma:latest
+#     environment:
+#       - IS_PERSISTENT=TRUE
+#     volumes:
+#       # Default configuration for persist_directory in chromadb/config.py
+#       # Currently it's located in "/chroma/chroma/"
+#       - chroma-data:/chroma/chroma/
+#     ports:
+#       - 8000:8000
+#     networks:
+#       - net
+
+volumes:
+  # chroma-data:
+  #   driver: local
+  ollama:
+    driver: local
