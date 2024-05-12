@@ -3,3 +3,7 @@ __pycache__
 .DS_Store
 .ipynb_checkpoints
 .virtual_documents
+
+# workaround
+dockers/ollama/ollama/ollama/id_ed25519
+dockers/ollama/ollama/ollama/id_ed25519.pub
