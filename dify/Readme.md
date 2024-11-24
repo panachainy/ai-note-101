@@ -32,3 +32,25 @@ access `http://localhost:8080`
 
 - Chat - llama3.2
 - Rerank - cross-encoder
+
+    ```bash
+    curl http://localhost:8080/v1/rerank \
+      -H "Content-Type: application/json" \
+      -d '{
+      "model": "jina-reranker-v1-base-en",
+      "query": "Organic skincare products for sensitive skin",
+      "documents": [
+        "Eco-friendly kitchenware for modern homes",
+        "Biodegradable cleaning supplies for eco-conscious consumers",
+        "Organic cotton baby clothes for sensitive skin",
+        "Natural organic skincare range for sensitive skin",
+        "Tech gadgets for smart homes: 2024 edition",
+        "Sustainable gardening tools and compost solutions",
+        "Sensitive skin-friendly facial cleansers and toners",
+        "Organic food wraps and storage solutions",
+        "All-natural pet food for dogs with allergies",
+        "Yoga mats made from recycled materials"
+      ],
+      "top_n": 3
+    }'
+    ```
