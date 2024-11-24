@@ -1,7 +1,9 @@
 version: "3.9"
 services:
   api:
-    image: localai/localai:latest-cpu
+    # image: localai/localai:latest-cpu
+    image: localai/localai:latest-aio-cpu
+
     # For a specific version:
     # image: localai/localai:v2.23.0-aio-cpu
     # For Nvidia GPUs decomment one of the following (cuda11 or cuda12):
