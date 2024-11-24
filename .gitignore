@@ -7,3 +7,5 @@ __pycache__
 # workaround
 dockers/ollama/ollama/ollama/id_ed25519
 dockers/ollama/ollama/ollama/id_ed25519.pub
+
+dify/models
