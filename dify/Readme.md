@@ -5,7 +5,11 @@
 - [LocalAI](https://github.com/mudler/LocalAI)
 - Ollama
 
-## Run
+## LocalAI
+
+**Not work now**
+
+Run
 
 ```sh
 # CPU only image:
@@ -23,14 +27,6 @@ docker run -ti --name local-ai -p 8080:8080 localai/localai:latest-aio-cpu
 
 access `http://localhost:8080`
 
-## access localhost from docker
-
-- Ollama `http://host.docker.internal:11434`
-- LocalAI `http://host.docker.internal:8080`
-
-## Model
-
-- Chat - llama3.2
 - Rerank - cross-encoder
 
     ```bash
@@ -54,3 +50,23 @@ access `http://localhost:8080`
       "top_n": 3
     }'
     ```
+
+- LocalAI `http://host.docker.internal:8080/v1`
+
+
+
+### Model config
+
+Place dify/localai/models/xxxx.yaml
+
+```yaml reranker.yaml
+name: japanese-reranker
+backend: rerankers
+parameters:
+  model: hotchpotch/japanese-reranker-cross-encoder-small-v1
+```
+
+## Ollama
+
+- Ollama `http://host.docker.internal:11434`
+- Chat - llama3.2
