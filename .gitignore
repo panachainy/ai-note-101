@@ -8,4 +8,4 @@ __pycache__
 dockers/ollama/ollama/ollama/id_ed25519
 dockers/ollama/ollama/ollama/id_ed25519.pub
 
-dify/models
+dify/localai/models
