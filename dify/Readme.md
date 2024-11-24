@@ -5,6 +5,10 @@
 - [LocalAI](https://github.com/mudler/LocalAI)
 - Ollama
 
+## Deploy Dify
+
+[ref](https://docs.dify.ai/getting-started/install-self-hosted/docker-compose)
+
 ## LocalAI
 
 **Not work now**
