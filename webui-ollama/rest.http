@@ -1,0 +1,47 @@
+POST http://localhost:11434/api/generate
+
+{
+  "model": "llama3.2",
+  "prompt": "หนึ่งบวกสองได้เท่าไหร่?",
+  "stream": false
+}
+
+###
+GET http://192.168.2.101:9901/ollama/v1/models
+accept: application/json
+Authorization: Bearer xxx
+
+###
+POST http://192.168.2.101:9901/ollama/api/generate
+accept: application/json
+Authorization: Bearer xxx
+
+{
+  "model": "llama3.2:3b",
+  "prompt": "หนึ่งบวกสองได้เท่าไหร่?",
+  "stream": false
+}
+###
+
+POST http://192.168.2.101:9901/ollama/api/generate
+accept: application/json
+Authorization: Bearer xxx
+
+{
+  "model": "llama3.2:3b",
+  "prompt": "สมชายเดินทางไปลาววันที่ 13 สิงหาคม 2567. please summarize in JSON this format: {'traveler':string,country,string,'departure_date':'dd-mm-yyyy'}",
+  "format": "json",
+  "stream": false
+}
+###
+
+POST http://192.168.2.101:9901/ollama/api/generate
+accept: application/json
+Authorization: Bearer xxx
+
+{
+  "model": "llama3.2:3b",
+  "prompt": "Create Node.js game. Guess random number 1-10. Hint with word more or less if not correct guess.",
+  "stream": false
+}
+###
