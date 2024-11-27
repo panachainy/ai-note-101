@@ -44,7 +44,9 @@ services:
       entrypoint: /bin/sh -c "sleep 3; flowise start"
 
   # docker exec -it ollama ollama pull llama3.2
+  # docker exec -it ollama ollama pull llama3.2:1b
   # docker exec -it ollama ollama pull nomic-embed-text
+
   ollama:
     image: ollama/ollama:latest
     volumes:
@@ -111,7 +113,6 @@ volumes:
 # version: '3.8'
 
 # services:
-
 
 #   ollama-webui:
 #     image: ghcr.io/ollama-webui/ollama-webui:main
