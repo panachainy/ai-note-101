@@ -47,11 +47,26 @@ services:
   # docker exec -it ollama ollama pull llama3.2:1b
   # docker exec -it ollama ollama pull nomic-embed-text
 
+  # ## For macOS
+  # ollama:
+  #   image: ollama/ollama:latest
+  #   volumes:
+  #     - ./ollama/ollama:/root/.ollama
+  #   container_name: ollama
+  #   platform: linux/arm64
+  #   restart: unless-stopped
+  #   ports:
+  #     - 11434:11434
+  #   environment:
+  #     - OLLAMA_DEBUG="1"
+
+  ## for windows
   ollama:
     image: ollama/ollama:latest
     volumes:
       - ./ollama/ollama:/root/.ollama
     container_name: ollama
+    platform: linux/amd64
     pull_policy: always
     tty: true
     restart: unless-stopped
