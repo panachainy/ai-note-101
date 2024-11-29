@@ -1,105 +1,6 @@
 {
   "nodes": [
     {
-      "id": "conversationalAgent_0",
-      "position": {
-        "x": 661.969110356369,
-        "y": 336.26195895825384
-      },
-      "type": "customNode",
-      "data": {
-        "id": "conversationalAgent_0",
-        "label": "Conversational Agent",
-        "version": 3,
-        "name": "conversationalAgent",
-        "type": "AgentExecutor",
-        "baseClasses": [
-          "AgentExecutor",
-          "BaseChain",
-          "Runnable"
-        ],
-        "category": "Agents",
-        "description": "Conversational agent for a chat model. It will utilize chat specific prompts",
-        "inputParams": [
-          {
-            "label": "System Message",
-            "name": "systemMessage",
-            "type": "string",
-            "rows": 4,
-            "default": "Assistant is a large language model trained by OpenAI.\n\nAssistant is designed to be able to assist with a wide range of tasks, from answering simple questions to providing in-depth explanations and discussions on a wide range of topics. As a language model, Assistant is able to generate human-like text based on the input it receives, allowing it to engage in natural-sounding conversations and provide responses that are coherent and relevant to the topic at hand.\n\nAssistant is constantly learning and improving, and its capabilities are constantly evolving. It is able to process and understand large amounts of text, and can use this knowledge to provide accurate and informative responses to a wide range of questions. Additionally, Assistant is able to generate its own text based on the input it receives, allowing it to engage in discussions and provide explanations and descriptions on a wide range of topics.\n\nOverall, Assistant is a powerful system that can help with a wide range of tasks and provide valuable insights and information on a wide range of topics. Whether you need help with a specific question or just want to have a conversation about a particular topic, Assistant is here to assist.",
-            "optional": true,
-            "additionalParams": true,
-            "id": "conversationalAgent_0-input-systemMessage-string"
-          },
-          {
-            "label": "Max Iterations",
-            "name": "maxIterations",
-            "type": "number",
-            "optional": true,
-            "additionalParams": true,
-            "id": "conversationalAgent_0-input-maxIterations-number"
-          }
-        ],
-        "inputAnchors": [
-          {
-            "label": "Allowed Tools",
-            "name": "tools",
-            "type": "Tool",
-            "list": true,
-            "id": "conversationalAgent_0-input-tools-Tool"
-          },
-          {
-            "label": "Chat Model",
-            "name": "model",
-            "type": "BaseChatModel",
-            "id": "conversationalAgent_0-input-model-BaseChatModel"
-          },
-          {
-            "label": "Memory",
-            "name": "memory",
-            "type": "BaseChatMemory",
-            "id": "conversationalAgent_0-input-memory-BaseChatMemory"
-          },
-          {
-            "label": "Input Moderation",
-            "description": "Detect text that could generate harmful output and prevent it from being sent to the language model",
-            "name": "inputModeration",
-            "type": "Moderation",
-            "optional": true,
-            "list": true,
-            "id": "conversationalAgent_0-input-inputModeration-Moderation"
-          }
-        ],
-        "inputs": {
-          "tools": "",
-          "model": "{{chatOllama_0.data.instance}}",
-          "memory": "{{bufferMemory_0.data.instance}}",
-          "systemMessage": "Assistant is a large language model trained by OpenAI.\n\nAssistant is designed to be able to assist with a wide range of tasks, from answering simple questions to providing in-depth explanations and discussions on a wide range of topics. As a language model, Assistant is able to generate human-like text based on the input it receives, allowing it to engage in natural-sounding conversations and provide responses that are coherent and relevant to the topic at hand.\n\nAssistant is constantly learning and improving, and its capabilities are constantly evolving. It is able to process and understand large amounts of text, and can use this knowledge to provide accurate and informative responses to a wide range of questions. Additionally, Assistant is able to generate its own text based on the input it receives, allowing it to engage in discussions and provide explanations and descriptions on a wide range of topics.\n\nOverall, Assistant is a powerful system that can help with a wide range of tasks and provide valuable insights and information on a wide range of topics. Whether you need help with a specific question or just want to have a conversation about a particular topic, Assistant is here to assist.",
-          "inputModeration": "",
-          "maxIterations": ""
-        },
-        "outputAnchors": [
-          {
-            "id": "conversationalAgent_0-output-conversationalAgent-AgentExecutor|BaseChain|Runnable",
-            "name": "conversationalAgent",
-            "label": "AgentExecutor",
-            "description": "Conversational agent for a chat model. It will utilize chat specific prompts",
-            "type": "AgentExecutor | BaseChain | Runnable"
-          }
-        ],
-        "outputs": {},
-        "selected": false
-      },
-      "width": 300,
-      "height": 435,
-      "positionAbsolute": {
-        "x": 661.969110356369,
-        "y": 336.26195895825384
-      },
-      "selected": false,
-      "dragging": false
-    },
-    {
       "id": "chatOllama_0",
       "position": {
         "x": 143.85298535233738,
@@ -307,7 +208,7 @@
         ],
         "inputs": {
           "cache": "",
-          "baseUrl": "http://ollama:11434",
+          "baseUrl": "http://host.docker.internal:11434",
           "modelName": "llama3.2:1b",
           "temperature": 0.9,
           "allowImageUploads": "",
@@ -339,7 +240,7 @@
         "selected": false
       },
       "width": 300,
-      "height": 676,
+      "height": 673,
       "selected": false,
       "positionAbsolute": {
         "x": 143.85298535233738,
@@ -348,88 +249,226 @@
       "dragging": false
     },
     {
-      "id": "bufferMemory_0",
+      "id": "llmChain_0",
       "position": {
-        "x": 143.41361009672727,
-        "y": 970.1101997380647
+        "x": 769.9639785277357,
+        "y": 164.6165379621566
       },
       "type": "customNode",
       "data": {
-        "id": "bufferMemory_0",
-        "label": "Buffer Memory",
-        "version": 2,
-        "name": "bufferMemory",
-        "type": "BufferMemory",
+        "id": "llmChain_0",
+        "label": "LLM Chain",
+        "version": 3,
+        "name": "llmChain",
+        "type": "LLMChain",
         "baseClasses": [
-          "BufferMemory",
-          "BaseChatMemory",
-          "BaseMemory"
+          "LLMChain",
+          "BaseChain",
+          "Runnable"
         ],
-        "category": "Memory",
-        "description": "Retrieve chat messages stored in database",
+        "category": "Chains",
+        "description": "Chain to run queries against LLMs",
         "inputParams": [
           {
-            "label": "Session Id",
-            "name": "sessionId",
+            "label": "Chain Name",
+            "name": "chainName",
             "type": "string",
-            "description": "If not specified, a random id will be used. Learn <a target=\"_blank\" href=\"https://docs.flowiseai.com/memory#ui-and-embedded-chat\">more</a>",
-            "default": "",
-            "additionalParams": true,
+            "placeholder": "Name Your Chain",
             "optional": true,
-            "id": "bufferMemory_0-input-sessionId-string"
+            "id": "llmChain_0-input-chainName-string"
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Language Model",
+            "name": "model",
+            "type": "BaseLanguageModel",
+            "id": "llmChain_0-input-model-BaseLanguageModel"
           },
           {
-            "label": "Memory Key",
-            "name": "memoryKey",
+            "label": "Prompt",
+            "name": "prompt",
+            "type": "BasePromptTemplate",
+            "id": "llmChain_0-input-prompt-BasePromptTemplate"
+          },
+          {
+            "label": "Output Parser",
+            "name": "outputParser",
+            "type": "BaseLLMOutputParser",
+            "optional": true,
+            "id": "llmChain_0-input-outputParser-BaseLLMOutputParser"
+          },
+          {
+            "label": "Input Moderation",
+            "description": "Detect text that could generate harmful output and prevent it from being sent to the language model",
+            "name": "inputModeration",
+            "type": "Moderation",
+            "optional": true,
+            "list": true,
+            "id": "llmChain_0-input-inputModeration-Moderation"
+          }
+        ],
+        "inputs": {
+          "model": "{{chatOllama_0.data.instance}}",
+          "prompt": "{{chatPromptTemplate_0.data.instance}}",
+          "outputParser": "",
+          "inputModeration": "",
+          "chainName": "Chat"
+        },
+        "outputAnchors": [
+          {
+            "name": "output",
+            "label": "Output",
+            "type": "options",
+            "description": "",
+            "options": [
+              {
+                "id": "llmChain_0-output-llmChain-LLMChain|BaseChain|Runnable",
+                "name": "llmChain",
+                "label": "LLM Chain",
+                "description": "",
+                "type": "LLMChain | BaseChain | Runnable"
+              },
+              {
+                "id": "llmChain_0-output-outputPrediction-string|json",
+                "name": "outputPrediction",
+                "label": "Output Prediction",
+                "description": "",
+                "type": "string | json"
+              }
+            ],
+            "default": "llmChain"
+          }
+        ],
+        "outputs": {
+          "output": "llmChain"
+        },
+        "selected": false
+      },
+      "width": 300,
+      "height": 505,
+      "positionAbsolute": {
+        "x": 769.9639785277357,
+        "y": 164.6165379621566
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "chatPromptTemplate_0",
+      "position": {
+        "x": 403.44282975794215,
+        "y": -593.3750685452346
+      },
+      "type": "customNode",
+      "data": {
+        "id": "chatPromptTemplate_0",
+        "label": "Chat Prompt Template",
+        "version": 2,
+        "name": "chatPromptTemplate",
+        "type": "ChatPromptTemplate",
+        "baseClasses": [
+          "ChatPromptTemplate",
+          "BaseChatPromptTemplate",
+          "BasePromptTemplate",
+          "Runnable"
+        ],
+        "category": "Prompts",
+        "description": "Schema to represent a chat prompt",
+        "inputParams": [
+          {
+            "label": "System Message",
+            "name": "systemMessagePrompt",
             "type": "string",
-            "default": "chat_history",
+            "rows": 4,
+            "placeholder": "You are a helpful assistant that translates {input_language} to {output_language}.",
+            "id": "chatPromptTemplate_0-input-systemMessagePrompt-string"
+          },
+          {
+            "label": "Human Message",
+            "name": "humanMessagePrompt",
+            "description": "This prompt will be added at the end of the messages as human message",
+            "type": "string",
+            "rows": 4,
+            "placeholder": "{text}",
+            "id": "chatPromptTemplate_0-input-humanMessagePrompt-string"
+          },
+          {
+            "label": "Format Prompt Values",
+            "name": "promptValues",
+            "type": "json",
+            "optional": true,
+            "acceptVariable": true,
+            "list": true,
+            "id": "chatPromptTemplate_0-input-promptValues-json"
+          },
+          {
+            "label": "Messages History",
+            "name": "messageHistory",
+            "description": "Add messages after System Message. This is useful when you want to provide few shot examples",
+            "type": "tabs",
+            "tabIdentifier": "selectedMessagesTab",
             "additionalParams": true,
-            "id": "bufferMemory_0-input-memoryKey-string"
+            "default": "messageHistoryCode",
+            "tabs": [
+              {
+                "label": "Add Messages (Code)",
+                "name": "messageHistoryCode",
+                "type": "code",
+                "hideCodeExecute": true,
+                "codeExample": "const { AIMessage, HumanMessage, ToolMessage } = require('@langchain/core/messages');\n\nreturn [\n    new HumanMessage(\"What is 333382 🦜 1932?\"),\n    new AIMessage({\n        content: \"\",\n        tool_calls: [\n        {\n            id: \"12345\",\n            name: \"calulator\",\n            args: {\n                number1: 333382,\n                number2: 1932,\n                operation: \"divide\",\n            },\n        },\n        ],\n    }),\n    new ToolMessage({\n        tool_call_id: \"12345\",\n        content: \"The answer is 172.558.\",\n    }),\n    new AIMessage(\"The answer is 172.558.\"),\n]",
+                "optional": true,
+                "additionalParams": true
+              }
+            ],
+            "id": "chatPromptTemplate_0-input-messageHistory-tabs"
           }
         ],
         "inputAnchors": [],
         "inputs": {
-          "sessionId": "",
-          "memoryKey": "chat_history"
+          "systemMessagePrompt": "",
+          "humanMessagePrompt": "{subject}",
+          "promptValues": "{\"subject\":\"{{question}}\"}",
+          "messageHistory": "messageHistoryCode"
         },
         "outputAnchors": [
           {
-            "id": "bufferMemory_0-output-bufferMemory-BufferMemory|BaseChatMemory|BaseMemory",
-            "name": "bufferMemory",
-            "label": "BufferMemory",
-            "description": "Retrieve chat messages stored in database",
-            "type": "BufferMemory | BaseChatMemory | BaseMemory"
+            "id": "chatPromptTemplate_0-output-chatPromptTemplate-ChatPromptTemplate|BaseChatPromptTemplate|BasePromptTemplate|Runnable",
+            "name": "chatPromptTemplate",
+            "label": "ChatPromptTemplate",
+            "description": "Schema to represent a chat prompt",
+            "type": "ChatPromptTemplate | BaseChatPromptTemplate | BasePromptTemplate | Runnable"
           }
         ],
         "outputs": {},
         "selected": false
       },
       "width": 300,
-      "height": 253,
+      "height": 737,
       "selected": false,
+      "dragging": false,
       "positionAbsolute": {
-        "x": 143.41361009672727,
-        "y": 970.1101997380647
-      },
-      "dragging": false
+        "x": 403.44282975794215,
+        "y": -593.3750685452346
+      }
     }
   ],
   "edges": [
     {
       "source": "chatOllama_0",
       "sourceHandle": "chatOllama_0-output-chatOllama-ChatOllama|ChatOllama|BaseChatModel|BaseLanguageModel|Runnable",
-      "target": "conversationalAgent_0",
-      "targetHandle": "conversationalAgent_0-input-model-BaseChatModel",
+      "target": "llmChain_0",
+      "targetHandle": "llmChain_0-input-model-BaseLanguageModel",
       "type": "buttonedge",
-      "id": "chatOllama_0-chatOllama_0-output-chatOllama-ChatOllama|ChatOllama|BaseChatModel|BaseLanguageModel|Runnable-conversationalAgent_0-conversationalAgent_0-input-model-BaseChatModel"
+      "id": "chatOllama_0-chatOllama_0-output-chatOllama-ChatOllama|ChatOllama|BaseChatModel|BaseLanguageModel|Runnable-llmChain_0-llmChain_0-input-model-BaseLanguageModel"
     },
     {
-      "source": "bufferMemory_0",
-      "sourceHandle": "bufferMemory_0-output-bufferMemory-BufferMemory|BaseChatMemory|BaseMemory",
-      "target": "conversationalAgent_0",
-      "targetHandle": "conversationalAgent_0-input-memory-BaseChatMemory",
+      "source": "chatPromptTemplate_0",
+      "sourceHandle": "chatPromptTemplate_0-output-chatPromptTemplate-ChatPromptTemplate|BaseChatPromptTemplate|BasePromptTemplate|Runnable",
+      "target": "llmChain_0",
+      "targetHandle": "llmChain_0-input-prompt-BasePromptTemplate",
       "type": "buttonedge",
-      "id": "bufferMemory_0-bufferMemory_0-output-bufferMemory-BufferMemory|BaseChatMemory|BaseMemory-conversationalAgent_0-conversationalAgent_0-input-memory-BaseChatMemory"
+      "id": "chatPromptTemplate_0-chatPromptTemplate_0-output-chatPromptTemplate-ChatPromptTemplate|BaseChatPromptTemplate|BasePromptTemplate|Runnable-llmChain_0-llmChain_0-input-prompt-BasePromptTemplate"
     }
   ]
 }
