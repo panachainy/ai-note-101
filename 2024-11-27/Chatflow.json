@@ -3,8 +3,8 @@
     {
       "id": "chatOllama_0",
       "position": {
-        "x": 143.85298535233738,
-        "y": 196.084032083586
+        "x": 73.45771587443645,
+        "y": -547.1053702732694
       },
       "type": "customNode",
       "data": {
@@ -209,9 +209,9 @@
         "inputs": {
           "cache": "",
           "baseUrl": "http://host.docker.internal:11434",
-          "modelName": "llama3.2:1b",
+          "modelName": "llama3.1",
           "temperature": 0.9,
-          "allowImageUploads": "",
+          "allowImageUploads": false,
           "jsonMode": "",
           "keepAlive": "5m",
           "topP": "",
@@ -240,11 +240,11 @@
         "selected": false
       },
       "width": 300,
-      "height": 673,
+      "height": 677,
       "selected": false,
       "positionAbsolute": {
-        "x": 143.85298535233738,
-        "y": 196.084032083586
+        "x": 73.45771587443645,
+        "y": -547.1053702732694
       },
       "dragging": false
     },
@@ -346,7 +346,7 @@
         "selected": false
       },
       "width": 300,
-      "height": 505,
+      "height": 508,
       "positionAbsolute": {
         "x": 769.9639785277357,
         "y": 164.6165379621566
@@ -357,8 +357,8 @@
     {
       "id": "chatPromptTemplate_0",
       "position": {
-        "x": 403.44282975794215,
-        "y": -593.3750685452346
+        "x": 72.2290855081389,
+        "y": 165.97062516720462
       },
       "type": "customNode",
       "data": {
@@ -426,8 +426,8 @@
         ],
         "inputAnchors": [],
         "inputs": {
-          "systemMessagePrompt": "",
-          "humanMessagePrompt": "{subject}",
+          "systemMessagePrompt": "You are a knowledgeable seller specializing in the game industry. Your shop offers video games, consoles, PCs, accessories, and more. Answer questions briefly and in an easy-to-understand manner.",
+          "humanMessagePrompt": "{question}",
           "promptValues": "{\"subject\":\"{{question}}\"}",
           "messageHistory": "messageHistoryCode"
         },
@@ -444,12 +444,12 @@
         "selected": false
       },
       "width": 300,
-      "height": 737,
+      "height": 743,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 403.44282975794215,
-        "y": -593.3750685452346
+        "x": 72.2290855081389,
+        "y": 165.97062516720462
       }
     }
   ],
