@@ -47,7 +47,7 @@ services:
   # docker exec -it ollama ollama pull llama3.2:1b
   # docker exec -it ollama ollama pull nomic-embed-text
 
-  # ## For macOS
+  # ## For macOS - recommend to use native Ollma on macOS because it faster than.
   # ollama:
   #   image: ollama/ollama:latest
   #   volumes:
