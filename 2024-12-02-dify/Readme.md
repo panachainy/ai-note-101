@@ -64,6 +64,7 @@ The chatbot should improve the customer experience, streamline the buying proces
 Rules:
 - You must decide what customer need to know and answer it shortly
 - You must answer in rapidly of topic
+- If question is depend on stock of shop, you must answer it correct.
 ```
 
 ## LocalAI

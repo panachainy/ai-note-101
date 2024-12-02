@@ -1,0 +1,11 @@
+id,game_title,platform,genre,price,stock_quantity,publisher,release_date,age_rating,condition,description
+1,The Legend of Zelda: Breath of the Wild,Nintendo Switch,Action-Adventure,59.99,50,Nintendo,2017-03-03,E10+,New,Explore a vast open world filled with challenges and mysteries.
+2,God of War,RPS5,Action,49.99,30,Sony Interactive Entertainment,2018-04-20,M,New,Kratos and his son journey in a world of Norse mythology.
+3,Animal Crossing: New Horizons,Nintendo Switch,Simulation,49.99,40,Nintendo,2020-03-20,E,New,Create your own island paradise and enjoy daily life activities.
+4,The Last of Us Part II,PS4,Action-Adventure,39.99,25,Naughty Dog,2020-06-19,M,Pre-Owned,A post-apocalyptic survival story with compelling characters.
+5,Minecraft,PS5,Sandbox,29.99,60,Mojang Studios,2011-11-18,E,New,Create and explore endless worlds and build amazing structures.
+6,Super Mario Odyssey,Nintendo Switch,Platformer,49.99,35,Nintendo,2017-10-27,E10+,New,Mario embarks on a globe-trotting adventure to save Princess Peach.
+7,Halo Infinite,Xbox Series X,First-Person Shooter,59.99,20,343 Industries,2021-12-08,T,New,Join Master Chief in the fight to save humanity in a vast open-world experience.
+8,Red Dead Redemption 2,PS4,Action-Adventure,59.99,15,Rockstar Games,2018-10-26,M,New,Experience life in the Wild West with an epic story and immersive world.
+9,FIFA 23,PS5,Sports,69.99,40,EA Sports,2022-09-30,E,New,The latest installment in the FIFA series with improved gameplay and graphics.
+10,Elden Ring,PS5,Action RPG,69.99,30,FromSoftware,2022-02-25,M,New,Explore a dark fantasy world created by Hidetaka Miyazaki and George R.R. Martin.
