@@ -1,3 +1,4 @@
-volumes/
-ssrf_proxy/
-nginx/
+# volumes/
+# ssrf_proxy/
+# nginx/
+.env

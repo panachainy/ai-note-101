@@ -340,6 +340,8 @@ services:
       NEXT_TELEMETRY_DISABLED: ${NEXT_TELEMETRY_DISABLED:-0}
       TEXT_GENERATION_TIMEOUT_MS: ${TEXT_GENERATION_TIMEOUT_MS:-60000}
       CSP_WHITELIST: ${CSP_WHITELIST:-}
+    ports:
+      - '${EXPOSE_WEB_PORT:-3000}:3000'
 
   # The postgres database.
   db:
@@ -400,31 +402,31 @@ services:
     networks:
       - ssrf_proxy_network
 
-  # ssrf_proxy server
-  # for more information, please refer to
-  # https://docs.dify.ai/learn-more/faq/install-faq#id-18.-why-is-ssrf_proxy-needed
-  ssrf_proxy:
-    image: ubuntu/squid:latest
-    restart: always
-    volumes:
-      - ./ssrf_proxy/squid.conf.template:/etc/squid/squid.conf.template
-      - ./ssrf_proxy/docker-entrypoint.sh:/docker-entrypoint-mount.sh
-    entrypoint:
-      [
-        'sh',
-        '-c',
-        "cp /docker-entrypoint-mount.sh /docker-entrypoint.sh && sed -i 's/\r$$//' /docker-entrypoint.sh && chmod +x /docker-entrypoint.sh && /docker-entrypoint.sh",
-      ]
-    environment:
-      # pls clearly modify the squid env vars to fit your network environment.
-      HTTP_PORT: ${SSRF_HTTP_PORT:-3128}
-      COREDUMP_DIR: ${SSRF_COREDUMP_DIR:-/var/spool/squid}
-      REVERSE_PROXY_PORT: ${SSRF_REVERSE_PROXY_PORT:-8194}
-      SANDBOX_HOST: ${SSRF_SANDBOX_HOST:-sandbox}
-      SANDBOX_PORT: ${SANDBOX_PORT:-8194}
-    networks:
-      - ssrf_proxy_network
-      - default
+  # # ssrf_proxy server
+  # # for more information, please refer to
+  # # https://docs.dify.ai/learn-more/faq/install-faq#id-18.-why-is-ssrf_proxy-needed
+  # ssrf_proxy:
+  #   image: ubuntu/squid:latest
+  #   restart: always
+  #   volumes:
+  #     - ./ssrf_proxy/squid.conf.template:/etc/squid/squid.conf.template
+  #     - ./ssrf_proxy/docker-entrypoint.sh:/docker-entrypoint-mount.sh
+  #   entrypoint:
+  #     [
+  #       'sh',
+  #       '-c',
+  #       "cp /docker-entrypoint-mount.sh /docker-entrypoint.sh && sed -i 's/\r$$//' /docker-entrypoint.sh && chmod +x /docker-entrypoint.sh && /docker-entrypoint.sh",
+  #     ]
+  #   environment:
+  #     # pls clearly modify the squid env vars to fit your network environment.
+  #     HTTP_PORT: ${SSRF_HTTP_PORT:-3128}
+  #     COREDUMP_DIR: ${SSRF_COREDUMP_DIR:-/var/spool/squid}
+  #     REVERSE_PROXY_PORT: ${SSRF_REVERSE_PROXY_PORT:-8194}
+  #     SANDBOX_HOST: ${SSRF_SANDBOX_HOST:-sandbox}
+  #     SANDBOX_PORT: ${SANDBOX_PORT:-8194}
+  #   networks:
+  #     - ssrf_proxy_network
+  #     - default
 
   # Certbot service
   # use `docker-compose --profile certbot up` to start the certbot service.
@@ -448,48 +450,48 @@ services:
 
   # The nginx reverse proxy.
   # used for reverse proxying the API service and Web service.
-  nginx:
-    image: nginx:latest
-    restart: always
-    volumes:
-      - ./nginx/nginx.conf.template:/etc/nginx/nginx.conf.template
-      - ./nginx/proxy.conf.template:/etc/nginx/proxy.conf.template
-      - ./nginx/https.conf.template:/etc/nginx/https.conf.template
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx/docker-entrypoint.sh:/docker-entrypoint-mount.sh
-      - ./nginx/ssl:/etc/ssl # cert dir (legacy)
-      - ./volumes/certbot/conf/live:/etc/letsencrypt/live # cert dir (with certbot container)
-      - ./volumes/certbot/conf:/etc/letsencrypt
-      - ./volumes/certbot/www:/var/www/html
-    entrypoint:
-      [
-        'sh',
-        '-c',
-        "cp /docker-entrypoint-mount.sh /docker-entrypoint.sh && sed -i 's/\r$$//' /docker-entrypoint.sh && chmod +x /docker-entrypoint.sh && /docker-entrypoint.sh",
-      ]
-    environment:
-      NGINX_SERVER_NAME: ${NGINX_SERVER_NAME:-_}
-      NGINX_HTTPS_ENABLED: ${NGINX_HTTPS_ENABLED:-false}
-      NGINX_SSL_PORT: ${NGINX_SSL_PORT:-443}
-      NGINX_PORT: ${NGINX_PORT:-80}
-      # You're required to add your own SSL certificates/keys to the `./nginx/ssl` directory
-      # and modify the env vars below in .env if HTTPS_ENABLED is true.
-      NGINX_SSL_CERT_FILENAME: ${NGINX_SSL_CERT_FILENAME:-dify.crt}
-      NGINX_SSL_CERT_KEY_FILENAME: ${NGINX_SSL_CERT_KEY_FILENAME:-dify.key}
-      NGINX_SSL_PROTOCOLS: ${NGINX_SSL_PROTOCOLS:-TLSv1.1 TLSv1.2 TLSv1.3}
-      NGINX_WORKER_PROCESSES: ${NGINX_WORKER_PROCESSES:-auto}
-      NGINX_CLIENT_MAX_BODY_SIZE: ${NGINX_CLIENT_MAX_BODY_SIZE:-15M}
-      NGINX_KEEPALIVE_TIMEOUT: ${NGINX_KEEPALIVE_TIMEOUT:-65}
-      NGINX_PROXY_READ_TIMEOUT: ${NGINX_PROXY_READ_TIMEOUT:-3600s}
-      NGINX_PROXY_SEND_TIMEOUT: ${NGINX_PROXY_SEND_TIMEOUT:-3600s}
-      NGINX_ENABLE_CERTBOT_CHALLENGE: ${NGINX_ENABLE_CERTBOT_CHALLENGE:-false}
-      CERTBOT_DOMAIN: ${CERTBOT_DOMAIN:-}
-    depends_on:
-      - api
-      - web
-    ports:
-      - '${EXPOSE_NGINX_PORT:-80}:${NGINX_PORT:-80}'
-      - '${EXPOSE_NGINX_SSL_PORT:-443}:${NGINX_SSL_PORT:-443}'
+  # nginx:
+  #   image: nginx:latest
+  #   restart: always
+  #   volumes:
+  #     - ./nginx/nginx.conf.template:/etc/nginx/nginx.conf.template
+  #     - ./nginx/proxy.conf.template:/etc/nginx/proxy.conf.template
+  #     - ./nginx/https.conf.template:/etc/nginx/https.conf.template
+  #     - ./nginx/conf.d:/etc/nginx/conf.d
+  #     - ./nginx/docker-entrypoint.sh:/docker-entrypoint-mount.sh
+  #     - ./nginx/ssl:/etc/ssl # cert dir (legacy)
+  #     - ./volumes/certbot/conf/live:/etc/letsencrypt/live # cert dir (with certbot container)
+  #     - ./volumes/certbot/conf:/etc/letsencrypt
+  #     - ./volumes/certbot/www:/var/www/html
+  #   entrypoint:
+  #     [
+  #       'sh',
+  #       '-c',
+  #       "cp /docker-entrypoint-mount.sh /docker-entrypoint.sh && sed -i 's/\r$$//' /docker-entrypoint.sh && chmod +x /docker-entrypoint.sh && /docker-entrypoint.sh",
+  #     ]
+  #   environment:
+  #     NGINX_SERVER_NAME: ${NGINX_SERVER_NAME:-_}
+  #     NGINX_HTTPS_ENABLED: ${NGINX_HTTPS_ENABLED:-false}
+  #     NGINX_SSL_PORT: ${NGINX_SSL_PORT:-443}
+  #     NGINX_PORT: ${NGINX_PORT:-80}
+  #     # You're required to add your own SSL certificates/keys to the `./nginx/ssl` directory
+  #     # and modify the env vars below in .env if HTTPS_ENABLED is true.
+  #     NGINX_SSL_CERT_FILENAME: ${NGINX_SSL_CERT_FILENAME:-dify.crt}
+  #     NGINX_SSL_CERT_KEY_FILENAME: ${NGINX_SSL_CERT_KEY_FILENAME:-dify.key}
+  #     NGINX_SSL_PROTOCOLS: ${NGINX_SSL_PROTOCOLS:-TLSv1.1 TLSv1.2 TLSv1.3}
+  #     NGINX_WORKER_PROCESSES: ${NGINX_WORKER_PROCESSES:-auto}
+  #     NGINX_CLIENT_MAX_BODY_SIZE: ${NGINX_CLIENT_MAX_BODY_SIZE:-15M}
+  #     NGINX_KEEPALIVE_TIMEOUT: ${NGINX_KEEPALIVE_TIMEOUT:-65}
+  #     NGINX_PROXY_READ_TIMEOUT: ${NGINX_PROXY_READ_TIMEOUT:-3600s}
+  #     NGINX_PROXY_SEND_TIMEOUT: ${NGINX_PROXY_SEND_TIMEOUT:-3600s}
+  #     NGINX_ENABLE_CERTBOT_CHALLENGE: ${NGINX_ENABLE_CERTBOT_CHALLENGE:-false}
+  #     CERTBOT_DOMAIN: ${CERTBOT_DOMAIN:-}
+  #   depends_on:
+  #     - api
+  #     - web
+  #   ports:
+  #     - '${EXPOSE_NGINX_PORT:-80}:${NGINX_PORT:-80}'
+  #     - '${EXPOSE_NGINX_SSL_PORT:-443}:${NGINX_SSL_PORT:-443}'
 
   # The Weaviate vector store.
   weaviate:
