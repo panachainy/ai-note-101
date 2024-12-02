@@ -9,6 +9,10 @@
 
 [ref](https://docs.dify.ai/getting-started/install-self-hosted/docker-compose)
 
+- move all in example-config to ./dify
+- cp .env.example .env
+- docker-compose up -d
+
 ## LocalAI
 
 **Not work now**

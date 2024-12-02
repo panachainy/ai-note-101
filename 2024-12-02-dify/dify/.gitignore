@@ -1,4 +1,8 @@
-# volumes/
-# ssrf_proxy/
-# nginx/
+certbot
+couchbase-server
+nginx
+ssrf_proxy
+startupscripts
+volumes/
+
 .env
