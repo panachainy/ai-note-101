@@ -9,8 +9,7 @@
 
 [ref](https://docs.dify.ai/getting-started/install-self-hosted/docker-compose)
 
-- move all in example-config to ./dify
-- cp .env.example .env
+- move all in example-config to ./dify and `cp .env.example .env` or `make init`
 - docker-compose up -d
 
 ## Chat bot
